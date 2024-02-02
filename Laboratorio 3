@@ -1,0 +1,176 @@
+#include <iostream>
+#include <cmath>
+
+// Funciones declaradas
+int suma(int a, int b);
+int resta(int a, int b);
+int multiplicacion(int a, int b);
+double division(int a, int b);
+bool esMayor(int a, int b);
+bool esMenor(int a, int b);
+bool esIgual(int a, int b);
+int calcularPotencia(int base, int exponente);
+bool esPrimo(int num);
+bool esBisiesto(int year);
+
+int main() {
+    int num1, num2;
+
+    // Punto 1: Operadores y Variables
+    std::cout << "Ingrese dos números enteros: ";
+    std::cin >> num1 >> num2;
+
+    int suma_resultado = suma(num1, num2);
+    int resta_resultado = resta(num1, num2);
+    int multiplicacion_resultado = multiplicacion(num1, num2);
+    double division_resultado = division(num1, num2);
+
+    std::cout << "Resultados:" << std::endl;
+    std::cout << "Suma: " << suma_resultado << std::endl;
+    std::cout << "Resta: " << resta_resultado << std::endl;
+    std::cout << "Multiplicación: " << multiplicacion_resultado << std::endl;
+    std::cout << "División: " << division_resultado << std::endl;
+
+    // Punto 2: Funciones
+    int base, exponente;
+    std::cout << "Ingrese la base y el exponente para calcular la potencia: ";
+    std::cin >> base >> exponente;
+    int potencia_resultado = calcularPotencia(base, exponente);
+    std::cout << "Potencia: " << potencia_resultado << std::endl;
+
+    // Punto 3: Determinar Números Primos
+    int numero_primo;
+    std::cout << "Ingrese un número para verificar si es primo: ";
+    std::cin >> numero_primo;
+    bool es_primo = esPrimo(numero_primo);
+    std::cout << "El número " << numero_primo << (es_primo ? " es primo." : " no es primo.") << std::endl;
+
+    // Punto 4: Año Bisiesto
+    int year;
+    std::cout << "Ingrese un año para verificar si es bisiesto: ";
+    std::cin >> year;
+    bool es_bisiesto = esBisiesto(year);
+    std::cout << "El año " << year << (es_bisiesto ? " es bisiesto." : " no es bisiesto.") << std::endl;
+
+    // Punto 5: Menú de Opciones
+    char opcion;
+    do {
+        std::cout << "\nMenú de Opciones:" << std::endl;
+        std::cout << "1. Operaciones básicas" << std::endl;
+        std::cout << "2. Calcular potencia" << std::endl;
+        std::cout << "3. Verificar si un número es primo" << std::endl;
+        std::cout << "4. Verificar si un año es bisiesto" << std::endl;
+        std::cout << "5. Salir" << std::endl;
+        std::cout << "Seleccione una opción: ";
+        std::cin >> opcion;
+
+        switch (opcion) {
+            case '1':
+                // Realizar operaciones básicas con nuevos números
+                std::cout << "Ingrese dos nuevos números enteros: ";
+                std::cin >> num1 >> num2;
+                // Realizar operaciones y mostrar resultados
+                // ...
+                break;
+
+            case '2':
+                // Calcular potencia con nuevos valores
+                std::cout << "Ingrese la base y el exponente para calcular la potencia: ";
+                std::cin >> base >> exponente;
+                // Calcular potencia y mostrar resultado
+                // ...
+                break;
+
+            case '3':
+                // Verificar si un nuevo número es primo
+                std::cout << "Ingrese un nuevo número para verificar si es primo: ";
+                std::cin >> numero_primo;
+                // Verificar si es primo y mostrar resultado
+                // ...
+                break;
+
+            case '4':
+                // Verificar si un nuevo año es bisiesto
+                std::cout << "Ingrese un nuevo año para verificar si es bisiesto: ";
+                std::cin >> year;
+                // Verificar si es bisiesto y mostrar resultado
+                // ...
+                break;
+
+            case '5':
+                std::cout << "Saliendo del programa." << std::endl;
+                break;
+
+            default:
+                std::cout << "Opción no válida. Intente de nuevo." << std::endl;
+        }
+
+    } while (opcion != '5');
+
+    return 0;
+}
+
+// Definición de funciones
+int suma(int a, int b) {
+    return a + b;
+}
+
+int resta(int a, int b) {
+    return a - b;
+}
+
+int multiplicacion(int a, int b) {
+    return a * b;
+}
+
+double division(int a, int b) {
+    // Manejar división por cero
+    if (b != 0) {
+        return static_cast<double>(a) / b;
+    } else {
+        std::cerr << "Error: División por cero." << std::endl;
+        return 0;
+    }
+}
+
+bool esMayor(int a, int b) {
+    return a > b;
+}
+
+bool esMenor(int a, int b) {
+    return a < b;
+}
+
+bool esIgual(int a, int b) {
+    return a == b;
+}
+
+int calcularPotencia(int base, int exponente) {
+    // Manejar casos donde el exponente sea cero o negativo
+    if (exponente < 0) {
+        std::cerr << "Error: No se puede calcular una potencia con exponente negativo." << std::endl;
+        return 0;
+    } else if (exponente == 0) {
+        return 1;
+    } else {
+        return std::pow(base, exponente);
+    }
+}
+
+bool esPrimo(int num) {
+    // Verificar si el número es primo
+    if (num < 2) {
+        return false;
+    }
+    for (int i = 2; i <= std::sqrt(num); ++i) {
+        if (num % i == 0) {
+            return false;
+        }
+    }
+    return true;
+}
+
+bool esBisiesto(int year) {
+    // Verificar si el año es bisiesto
+    return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
+}
