@@ -1,0 +1,119 @@
+**Ejercicio 1: Verificar si un número ingresado es par:**
+
+```cpp
+#include <iostream>
+
+int main() {
+    int numero;
+
+    // Solicitar al usuario que ingrese un número
+    std::cout << "Ingrese un numero: ";
+    std::cin >> numero;
+
+    // Verificar si el número es par
+    if (numero % 2 == 0) {
+        std::cout << "El numero ingresado es par." << std::endl;
+    } else {
+        std::cout << "El numero ingresado es impar." << std::endl;
+    }
+
+    return 0;
+}
+```
+
+**Ejercicio 2: Determinar si un año ingresado es bisiesto o no:**
+
+```cpp
+#include <iostream>
+
+int main() {
+    int year;
+
+    // Solicitar al usuario que ingrese un año
+    std::cout << "Ingrese un año: ";
+    std::cin >> year;
+
+    // Verificar si el año es bisiesto
+    if ((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0)) {
+        std::cout << "El año ingresado es bisiesto." << std::endl;
+    } else {
+        std::cout << "El año ingresado no es bisiesto." << std::endl;
+    }
+
+    return 0;
+}
+```
+
+**Ejercicio 3: Determinar si dos números ingresados son iguales:**
+
+```cpp
+#include <iostream>
+
+int main() {
+    float num1, num2;
+
+    // Solicitar al usuario que ingrese dos números
+    std::cout << "Ingrese el primer numero: ";
+    std::cin >> num1;
+
+    std::cout << "Ingrese el segundo numero: ";
+    std::cin >> num2;
+
+    // Verificar si los números son iguales
+    if (num1 == num2) {
+        std::cout << "Los numeros ingresados son iguales." << std::endl;
+    } else {
+        std::cout << "Los numeros ingresados no son iguales." << std::endl;
+    }
+
+    return 0;
+}
+```
+
+**Ejercicio 4: Verificar si un usuario es mayor de edad:**
+
+```cpp
+#include <iostream>
+
+int main() {
+    int edad;
+
+    // Solicitar al usuario que ingrese su edad
+    std::cout << "Ingrese su edad: ";
+    std::cin >> edad;
+
+    // Verificar si es mayor de edad
+    if (edad >= 18) {
+        std::cout << "Eres mayor de edad." << std::endl;
+    } else {
+        std::cout << "Eres menor de edad." << std::endl;
+    }
+
+    return 0;
+}
+```
+
+**Ejercicio 5: Evaluar si un estudiante aprobó un examen:**
+
+```cpp
+#include <iostream>
+
+int main() {
+    float calificacion;
+
+    // Solicitar al usuario que ingrese su calificación
+    std::cout << "Ingrese su calificacion: ";
+    std::cin >> calificacion;
+
+    // Verificar si aprobó el examen (calificación >= 60)
+    if (calificacion >= 60) {
+        std::cout << "Felicidades, has aprobado el examen." << std::endl;
+    } else {
+        std::cout << "Lo siento, no has aprobado el examen." << std::endl;
+    }
+
+    return 0;
+}
+```
+
+Estos ejercicios te proporcionarán práctica en el uso de estructuras de control como `if` y operadores condicionales para realizar tareas específicas en C++.
