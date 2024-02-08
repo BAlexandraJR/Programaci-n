@@ -1,4 +1,20 @@
+#include <iostream>
 
+// Variables globales
+float valor1 = 0;
+float valor2 = 0;
+float resultado = 0;
+
+// Declaración de funciones
+float suma(float a, float b);
+float resta(float a, float b);
+float multiplicacion(float a, float b);
+float division(float a, float b);
+
+int main() {
+    // Solicitar al usuario que ingrese dos valores
+    std::cout << "Ingrese el primer numero: ";
+    std::cin >> valor1;
 
     std::cout << "Ingrese el segundo numero: ";
     std::cin >> valor2;
@@ -23,5 +39,23 @@
 
     return 0;
 }
+
+// Definición de funciones
+float suma(float a, float b) {
+    return a + b;
+}
+
+float resta(float a, float b) {
+    return a - b;
+}
+
+float multiplicacion(float a, float b) {
+    return a * b;
+}
+
+float division(float a, float b) {
+    return a / b;
+}
+
 
 
