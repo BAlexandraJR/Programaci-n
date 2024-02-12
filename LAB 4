@@ -1,0 +1,80 @@
+#include <iostream>
+#include <cmath>
+
+// Declaración de funciones
+double realizarOperacion(double a, double b, char operador);
+void imprimirResultado(double resultado);
+
+int main() {
+    // Declaración de variables
+    int cantidadOperaciones;
+    double num1, num2, resultado;
+    char operador;
+
+    // Pide al usuario la cantidad de operaciones a realizar
+    std::cout << "Ingrese la cantidad de operaciones a realizar: ";
+    std::cin >> cantidadOperaciones;
+
+    // Bucle para realizar operaciones según la cantidad ingresada
+    for (int i = 0; i < cantidadOperaciones; ++i) {
+        // Solicita al usuario los operandos y el operador
+        std::cout << "\nOperacion #" << (i + 1) << ":\n";
+        std::cout << "Ingrese el primer número: ";
+        std::cin >> num1;
+        std::cout << "Ingrese el operador (+, -, *, /, %): ";
+        std::cin >> operador;
+        std::cout << "Ingrese el segundo número: ";
+        std::cin >> num2;
+
+        // Llama a la función para realizar la operación
+        resultado = realizarOperacion(num1, num2, operador);
+
+        // Llama a la función para imprimir el resultado
+        imprimirResultado(resultado);
+    }
+
+    // Fin del programa
+    std::cout << "\nFin del programa.\n";
+
+    return 0;
+}
+
+// Implementación de la función para realizar operaciones matemáticas
+double realizarOperacion(double a, double b, char operador) {
+    double resultado;
+
+    switch (operador) {
+        case '+':
+            resultado = a + b;
+            break;
+        case '-':
+            resultado = a - b;
+            break;
+        case '*':
+            resultado = a * b;
+            break;
+        case '/':
+            // Manejo de división por cero
+            if (b != 0) {
+                resultado = a / b;
+            } else {
+                std::cerr << "Error: División por cero.\n";
+                resultado = 0;
+            }
+            break;
+        case '%':
+            // Operación módulo
+            resultado = std::fmod(a, b);
+            break;
+        default:
+            std::cerr << "Error: Operador no válido.\n";
+            resultado = 0;
+    }
+
+    return resultado;
+}
+
+// Implementación de la función para imprimir resultados
+void imprimirResultado(double resultado) {
+    std::cout << "Resultado: " << resultado << "\n";
+}
