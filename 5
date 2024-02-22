@@ -1,0 +1,123 @@
+#include <iostream>
+
+// Función para la suma de números pares o impares hasta un número dado
+int sumaParesImpares(int numero, bool sumarPares) {
+    int suma = 0;
+    for (int i = 2; i <= numero; i += 2) {
+        if (sumarPares)
+            suma += i;
+        else
+            suma += (i - 1);
+    }
+    return suma;
+}
+
+// Función para calcular el factorial de un número usando bucle while
+int calcularFactorial(int numero) {
+    int factorial = 1;
+    while (numero > 1) {
+        factorial *= numero;
+        numero--;
+    }
+    return factorial;
+}
+
+// Función para contar la cantidad de dígitos de un número usando bucle do-while
+int contarDigitos(int numero) {
+    int contador = 0;
+    do {
+        numero /= 10;
+        contador++;
+    } while (numero != 0);
+    return contador;
+}
+
+// Función para ordenar tres números de menor a mayor
+void ordenarNumeros(int &a, int &b, int &c) {
+    if (a > b) std::swap(a, b);
+    if (a > c) std::swap(a, c);
+    if (b > c) std::swap(b, c);
+}
+
+// Función para la suma de dígitos de un número
+int sumaDigitos(int numero) {
+    int suma = 0;
+    while (numero != 0) {
+        suma += numero % 10;
+        numero /= 10;
+    }
+    return suma;
+}
+
+int main() {
+    int opcion;
+    
+    do {
+        // Menú
+        std::cout << "1. Suma de numeros pares o impares\n";
+        std::cout << "2. Factorial con bucle while\n";
+        std::cout << "3. Contador de digitos\n";
+        std::cout << "4. Ordenamiento de numeros (ascendente)\n";
+        std::cout << "5. Suma de digitos de un numero\n";
+        std::cout << "0. Salir\n";
+        std::cout << "Seleccione una opcion: ";
+        std::cin >> opcion;
+
+        switch (opcion) {
+            case 1:
+                // Suma de números pares o impares
+                int numeroSP;
+                bool sumarParesSP;
+                std::cout << "Ingrese un numero: ";
+                std::cin >> numeroSP;
+                std::cout << "¿Sumar pares? (1 para sí, 0 para no): ";
+                std::cin >> sumarParesSP;
+                std::cout << "La suma es: " << sumaParesImpares(numeroSP, sumarParesSP) << "\n";
+                break;
+
+            case 2:
+                // Factorial con bucle while
+                int numeroFac;
+                std::cout << "Ingrese un numero: ";
+                std::cin >> numeroFac;
+                std::cout << "El factorial es: " << calcularFactorial(numeroFac) << "\n";
+                break;
+
+            case 3:
+                // Contador de dígitos
+                int numeroCD;
+                std::cout << "Ingrese un numero: ";
+                std::cin >> numeroCD;
+                std::cout << "La cantidad de digitos es: " << contarDigitos(numeroCD) << "\n";
+                break;
+
+            case 4:
+                // Ordenamiento de números
+                int a, b, c;
+                std::cout << "Ingrese tres numeros separados por espacios: ";
+                std::cin >> a >> b >> c;
+                ordenarNumeros(a, b, c);
+                std::cout << "Numeros ordenados: " << a << " " << b << " " << c << "\n";
+                break;
+
+            case 5:
+                // Suma de dígitos de un número
+                int numeroSD;
+                std::cout << "Ingrese un numero: ";
+                std::cin >> numeroSD;
+                std::cout << "La suma de los digitos es: " << sumaDigitos(numeroSD) << "\n";
+                break;
+
+            case 0:
+                std::cout << "Saliendo del programa. ¡Hasta luego!\n";
+                break;
+
+            default:
+                std::cout << "Opcion no valida. Intente de nuevo.\n";
+        }
+
+    } while (opcion != 0);
+
+    return 0;
+}
+
