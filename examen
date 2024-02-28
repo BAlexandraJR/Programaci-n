@@ -1,0 +1,104 @@
+
+
+1. Programa:
+
+#include <iostream>
+
+int main() {
+    int a, b;
+    std::cout << "Ingrese dos números enteros: ";
+    std::cin >> a >> b;
+
+    // Operaciones
+    int suma = a + b;
+    int resta = a - b;
+    int multiplicacion = a * b;
+
+    // Manejo de la división para evitar división por cero
+    if (b != 0) {
+        double division = static_cast<double>(a) / b;
+        std::cout << "Suma: " << suma << std::endl;
+        std::cout << "Resta: " << resta << std::endl;
+        std::cout << "Multiplicación: " << multiplicacion << std::endl;
+        std::cout << "División: " << division << std::endl;
+    } else {
+        std::cout << "No se puede dividir por cero." << std::endl;
+    }
+
+    return 0;
+}
+
+2. Programa 2
+
+#include <iostream>
+
+int main() {
+    int n;
+    std::cout << "Ingrese un número entero positivo: ";
+    std::cin >> n;
+
+    // Suma de números desde 1 hasta n
+    int suma = 0;
+    for (int i = 1; i <= n; ++i) {
+        suma += i;
+    }
+
+    std::cout << "La suma de los números desde 1 hasta " << n << " es: " << suma << std::endl;
+
+    return 0;
+}
+
+ 3. programa 3
+
+#include <iostream>
+
+bool esPrimo(int numero) {
+    if (numero <= 1) {
+        return false;
+    }
+
+    for (int i = 2; i * i <= numero; ++i) {
+        if (numero % i == 0) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+int main() {
+    int num;
+    std::cout << "Ingrese un número entero: ";
+    std::cin >> num;
+
+    if (esPrimo(num)) {
+        std::cout << num << " es un número primo." << std::endl;
+    } else {
+        std::cout << num << " no es un número primo." << std::endl;
+    }
+
+    return 0;
+}
+
+
+4. Programa 
+#include <iostream>
+#include <cmath>
+
+int main() {
+    double numero;
+    std::cout << "Ingrese un número para calcular su raíz cuadrada: ";
+    std::cin >> numero;
+
+    // Verificar si el número es no negativo antes de calcular la raíz
+    if (numero >= 0) {
+        double raizCuadrada = std::sqrt(numero);
+        std::cout << "La raíz cuadrada de " << numero << " es: " << raizCuadrada << std::endl;
+    } else {
+        std::cout << "No se puede calcular la raíz cuadrada de un número negativo." << std::endl;
+    }
+
+    return 0;
+}
+
+
