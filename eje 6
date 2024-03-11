@@ -1,0 +1,197 @@
+1//
+#include <iostream>
+#include <string>
+
+class Libro {
+private:
+    std::string titulo;
+    std::string autor;
+    int anoPublicacion;
+
+public:
+    Libro() {
+        std::cout << "Ingrese el título del libro: ";
+        std::getline(std::cin, titulo);
+        std::cout << "Ingrese el autor del libro: ";
+        std::getline(std::cin, autor);
+        std::cout << "Ingrese el año de publicación del libro: ";
+        std::cin >> anoPublicacion;
+    }
+
+    void mostrarInformacion() {
+        std::cout << "Título: " << titulo << std::endl;
+        std::cout << "Autor: " << autor << std::endl;
+        std::cout << "Año de publicación: " << anoPublicacion << std::endl;
+    }
+};
+
+int main() {
+    Libro libro1;
+    libro1.mostrarInformacion();
+    
+    return 0;
+}
+
+2//
+#include <iostream>
+#include <string>
+
+class Estudiante {
+private:
+    std::string nombre;
+    std::string apellido;
+    int edad;
+    std::string curso;
+
+public:
+    Estudiante() {
+        std::cout << "Ingrese el nombre del estudiante: ";
+        std::getline(std::cin, nombre);
+        std::cout << "Ingrese el apellido del estudiante: ";
+        std::getline(std::cin, apellido);
+        std::cout << "Ingrese la edad del estudiante: ";
+        std::cin >> edad;
+        std::cin.ignore();  // Limpiar el buffer de entrada
+        std::cout << "Ingrese el curso del estudiante: ";
+        std::getline(std::cin, curso);
+    }
+
+    void mostrarInformacion() {
+        std::cout << "Nombre: " << nombre << std::endl;
+        std::cout << "Apellido: " << apellido << std::endl;
+        std::cout << "Edad: " << edad << std::endl;
+        std::cout << "Curso: " << curso << std::endl;
+    }
+};
+
+int main() {
+    Estudiante estudiante1;
+    estudiante1.mostrarInformacion();
+    
+    return 0;
+}
+3//#include <iostream>
+
+class Calculadora {
+private:
+    double numero1;
+    double numero2;
+
+public:
+    Calculadora() {
+        std::cout << "Ingrese el primer número: ";
+        std::cin >> numero1;
+        std::cout << "Ingrese el segundo número: ";
+        std::cin >> numero2;
+    }
+
+    double suma() {
+        return numero1 + numero2;
+    }
+
+    double resta() {
+        return numero1 - numero2;
+    }
+
+    double multiplicacion() {
+        return numero1 * numero2;
+    }
+
+    double division() {
+        if (numero2 != 0) {
+            return numero1 / numero2;
+        } else {
+            std::cerr << "Error: División por cero" << std::endl;
+            return 0;
+        }
+    }
+};
+
+int main() {
+    Calculadora calc;
+    std::cout << "Suma: " << calc.suma() << std::endl;
+    std::cout << "Resta: " << calc.resta() << std::endl;
+    std::cout << "Multiplicación: " << calc.multiplicacion() << std::endl;
+    std::cout << "División: " << calc.division() << std::endl;
+    
+    return 0;
+}
+4//
+
+
+ 
+#include<iostream>
+#include<string>
+using namespace std;
+
+class CuentaBancaria{
+private:
+    string nombre;
+    float saldo;
+    int numerocuenta;
+
+public:
+    CuentaBancaria(string nom,float saldoinicial,int num) {
+        nombre = nom;
+        saldo = saldoinicial;
+        numerocuenta = num;
+    }
+    void depositar(float cantidad) {
+        saldo = saldo + cantidad;
+        cout << "Se depositaron $" << cantidad << ". Saldo actual: $" << saldo <<endl;
+    }
+    void consultarSaldo() {
+    	cout <<"Nombre del titular: "<<nombre<<endl;
+    	cout <<"Numero de cuenta: "<<numerocuenta<<endl;
+    	cout <<"Saldo Inicial: "<<saldo<<endl;
+        cout << "Saldo actual de la cuenta: $" << saldo <<endl;
+    }
+};
+int main() {
+	
+    float cantidad;
+    cantidad=1000;
+    CuentaBancaria cuenta("Juan Perez",8000, 233445);
+
+    cuenta.consultarSaldo();
+    cuenta.depositar(cantidad);
+
+    return 0;
+}
+5//
+#include <iostream>
+#include <string>
+
+class Pelicula {
+private:
+    std::string titulo;
+    std::string director;
+    int anoLanzamiento;
+
+public:
+    void ingresarDatos() {
+        std::cout << "Ingrese el título de la película: ";
+        std::getline(std::cin, titulo);
+        std::cout << "Ingrese el nombre del director: ";
+        std::getline(std::cin, director);
+        std::cout << "Ingrese el año de lanzamiento: ";
+        std::cin >> anoLanzamiento;
+        std::cin.ignore();  // Limpiar el buffer de entrada
+    }
+
+    void mostrarInformacion() {
+        std::cout << "Título: " << titulo << std::endl;
+        std::cout << "Director: " << director << std::endl;
+        std::cout << "Año de lanzamiento: " << anoLanzamiento << std::endl;
+    }
+};
+
+int main() {
+    Pelicula pelicula1;
+    pelicula1.ingresarDatos();
+    pelicula1.mostrarInformacion();
+    
+    return 0;
+}
+
+
