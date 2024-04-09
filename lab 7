@@ -1,0 +1,212 @@
+1. *Manipulación de Archivos:*
+#include <iostream>
+#include <fstream>
+#include <string>
+
+using namespace std;
+
+int main() {
+    ofstream archivo("datos.txt");
+    string nombre;
+    int edad;
+
+    cout << "Ingrese el nombre y la edad (separados por un espacio, escriba 'fin' para terminar):" << endl;
+    while (cin >> nombre && nombre != "fin") {
+        cin >> edad;
+        archivo << nombre << " " << edad << endl;
+    }
+
+    archivo.close();
+
+    ifstream archivo_lectura("datos.txt");
+    string linea;
+
+    cout << "Contenido del archivo:" << endl;
+    while (getline(archivo_lectura, linea)) {
+        cout << linea << endl;
+    }
+
+    archivo_lectura.close();
+
+    return 0;
+}
+
+
+2. *Programación Orientada a Objetos:*
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+class Persona {
+public:
+    string nombre;
+    int edad;
+    string ocupacion;
+
+    void setNombre(string n) {
+        nombre = n;
+    }
+
+    void setEdad(int e) {
+        edad = e;
+    }
+
+    void setOcupacion(string o) {
+        ocupacion = o;
+    }
+
+    string getNombre() {
+        return nombre;
+    }
+
+    int getEdad() {
+        return edad;
+    }
+
+    string getOcupacion() {
+        return ocupacion;
+    }
+};
+
+int main() {
+    Persona persona1;
+    persona1.setNombre("Juan");
+    persona1.setEdad(30);
+    persona1.setOcupacion("Ingeniero");
+
+    cout << "Nombre: " << persona1.getNombre() << endl;
+    cout << "Edad: " << persona1.getEdad() << endl;
+    cout << "Ocupacion: " << persona1.getOcupacion() << endl;
+
+    return 0;
+}
+
+3. *Abstracción e Instanciación:*
+// Explicación y demostración de abstracción e instanciación se puede hacer mediante comentarios y ejemplos en el código anterior.
+
+// Instanciación de objetos utilizando la clase Persona:
+Persona persona2;
+persona2.setNombre("Maria");
+persona2.setEdad(25);
+persona2.setOcupacion("Doctor");
+
+cout << "Nombre: " << persona2.getNombre() << endl;
+cout << "Edad: " << persona2.getEdad() << endl;
+cout << "Ocupacion: " << persona2.getOcupacion() << endl;
+
+
+4. *Clases, Objetos y Métodos:*
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+// Definición de la clase Persona
+class Persona {
+protected: // Usamos protected en lugar de private para que las clases derivadas puedan acceder a estos miembros
+    string nombre;
+    int edad;
+    string ocupacion;
+
+public:
+    void setNombre(const string& nombre) {
+        this->nombre = nombre;
+    }
+
+    void setEdad(int edad) {
+        this->edad = edad;
+    }
+
+    void setOcupacion(const string& ocupacion) {
+        this->ocupacion = ocupacion;
+    }
+
+    string getNombre() const {
+        return nombre;
+    }
+
+    int getEdad() const {
+        return edad;
+    }
+
+    string getOcupacion() const {
+        return ocupacion;
+    }
+};
+
+// Definición de la clase Estudiante que hereda de Persona
+class Estudiante : public Persona {
+private:
+    int numeroEstudiante;
+    float promedioCalificaciones;
+
+public:
+    void setNumeroEstudiante(int num) {
+        numeroEstudiante = num;
+    }
+
+    void setPromedioCalificaciones(float promedio) {
+        promedioCalificaciones = promedio;
+    }
+
+    int getNumeroEstudiante() const {
+        return numeroEstudiante;
+    }
+
+    float getPromedioCalificaciones() const {
+        return promedioCalificaciones;
+    }
+};
+
+int main() {
+    Estudiante estudiante1;
+    estudiante1.setNombre("Ana");
+    estudiante1.setEdad(20);
+    estudiante1.setOcupacion("Estudiante");
+    estudiante1.setNumeroEstudiante(12345);
+    estudiante1.setPromedioCalificaciones(8.5);
+
+    cout << "Nombre: " << estudiante1.getNombre() << endl;
+    cout << "Edad: " << estudiante1.getEdad() << endl;
+    cout << "Ocupacion: " << estudiante1.getOcupacion() << endl;
+    cout << "Numero de estudiante: " << estudiante1.getNumeroEstudiante() << endl;
+    cout << "Promedio de calificaciones: " << estudiante1.getPromedioCalificaciones() << endl;
+
+    return 0;
+}
+
+5. *Bibliotecas Estándar:*
+// Este punto ya fue cubierto en los códigos anteriores al utilizar la biblioteca <string> en lugar de arreglos de caracteres.
+
+
+
+6. *Algoritmo de Ordenamiento:*
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <string>
+
+using namespace std;
+
+int main() {
+    vector<string> nombres = {"Pedro", "Maria", "Juan", "Ana", "Carlos"};
+
+    cout << "Nombres sin ordenar:" << endl;
+    for (const string& nombre : nombres) {
+        cout << nombre << endl;
+    }
+
+    // Ordenamiento utilizando el algoritmo de ordenamiento de la biblioteca estándar
+    sort(nombres.begin(), nombres.end());
+
+    cout << "\nNombres ordenados:" << endl;
+    for (const string& nombre : nombres) {
+        cout << nombre << endl;
+    }
+
+    return 0;
+}
+
+
+
