@@ -1,0 +1,189 @@
+codigo 1
+#include <iostream>
+#include <fstream>
+#include <vector>
+#include <string>
+
+using namespace std;
+
+class Empleado {
+private:
+    string nombre;
+    string apellido;
+    int edad;
+    float salario;
+
+public:
+    
+    Empleado(string nombre, string apellido, int edad, float salario) {
+        this->nombre = nombre;
+        this->apellido = apellido;
+        this->edad = edad;
+        this->salario = salario;
+    }
+
+    //  los valores de los atributos
+    void establecerNombre(string nombre) {
+        this->nombre = nombre;
+    }
+
+    void establecerApellido(string apellido) {
+        this->apellido = apellido;
+    }
+
+    void establecerEdad(int edad) {
+        this->edad = edad;
+    }
+
+    void establecerSalario(float salario) {
+        this->salario = salario;
+    }
+
+    // Métodos para obtener los valores de los atribitos 
+    string obtenerNombre() {
+        return nombre;
+    }
+
+    string obtenerApellido() {
+        return apellido;
+    }
+
+    int obtenerEdad() {
+        return edad;
+    }
+
+    float obtenerSalario() {
+        return salario;
+    }
+};
+
+int main() {
+    int numEmpleados;
+    cout << "Ingrese la cantidad de empleados: ";
+    cin >> numEmpleados;
+
+    vector<Empleado> empleados;
+
+    for (int i = 0; i < numEmpleados; ++i) {
+        string nombre, apellido;
+        int edad;
+        float salario;
+
+        cout << "\nIngrese los datos del empleado " << i + 1 << ":" << endl;
+        cout << "Nombre: ";
+        cin >> nombre;
+        cout << "Apellido: ";
+        cin >> apellido;
+        cout << "Edad: ";
+        cin >> edad;
+        cout << "Salario: ";
+        cin >> salario;
+
+        Empleado empleado(nombre, apellido, edad, salario);
+        empleados.push_back(empleado);
+    }
+
+    // los datos
+    ofstream archivo("empleados.txt");
+    if (archivo.is_open()) {
+        for (auto &empleado : empleados) {
+            archivo << empleado.obtenerNombre() << "," << empleado.obtenerApellido() << "," << empleado.obtenerEdad() << "," << empleado.obtenerSalario() << endl;
+        }
+        archivo.close();
+        cout << "Datos de empleados guardados en empleados.txt" << endl;
+    } else {
+        cout << "No se pudo abrir el archivo empleados.txt" << endl;
+    }
+
+    return 0;
+}
+
+codigo 2
+#include <iostream>
+#include <fstream>
+#include <sstream>
+#include <string>
+
+using namespace std;
+
+class Empleado {
+private:
+    string nombre;
+    string apellido;
+    int edad;
+    float salario;
+
+public:
+    // Constructor
+    Empleado(string nombre, string apellido, int edad, float salario) {
+        this->nombre = nombre;
+        this->apellido = apellido;
+        this->edad = edad;
+        this->salario = salario;
+    }
+
+    // Método para obtener el nombre completo del empleado
+    string obtenerNombreCompleto() {
+        return nombre + " " + apellido;
+    }
+
+    // Método para obtener la información del empleado
+    string obtenerInformacion() {
+        stringstream ss;
+        ss << "Nombre: " << nombre << endl;
+        ss << "Apellido: " << apellido << endl;
+        ss << "Edad: " << edad << endl;
+        ss << "Salario: " << salario << endl;
+        return ss.str();
+    }
+};
+
+// Función para buscar un empleado por nombre completo
+void buscarEmpleado(const string& nombreCompleto, ifstream& archivo) {
+    string linea;
+    while (getline(archivo, linea)) {
+        stringstream ss(linea);
+        string nombre, apellido;
+        int edad;
+        float salario;
+
+        getline(ss, nombre, ',');
+        getline(ss, apellido, ',');
+        ss >> edad;
+        ss.ignore();
+        ss >> salario;
+
+        if ((nombre + " " + apellido) == nombreCompleto) {
+            Empleado empleado(nombre, apellido, edad, salario);
+            cout << "Información del empleado:" << endl;
+            cout << empleado.obtenerInformacion() << endl;
+            return;
+        }
+    }
+    cout << "Empleado no encontrado." << endl;
+}
+
+int main() {
+    ifstream archivo("empleados.txt");
+    if (!archivo.is_open()) {
+        cout << "Error: No se pudo abrir el archivo empleados.txt." << endl;
+        return 1;
+    }
+
+    string nombreCompleto;
+    char continuar;
+    do {
+        cout << "\nIngrese el nombre completo del empleado a consultar: ";
+        getline(cin, nombreCompleto);
+
+        buscarEmpleado(nombreCompleto, archivo);
+
+        cout << "\n¿Desea realizar otra consulta? (s/n): ";
+        cin >> continuar;
+        cin.ignore(); // Limpiar el buffer del teclado
+    } while (continuar == 's' || continuar == 'S');
+
+    archivo.close();
+
+    return 0;
+}
