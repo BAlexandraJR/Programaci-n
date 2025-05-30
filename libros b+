@@ -1,0 +1,288 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
+
+class Libro {
+    int id;
+    String titulo;
+    String autor;
+    int anioPublicacion;
+
+    public Libro(int id, String titulo, String autor, int anioPublicacion) {
+        this.id = id;
+        this.titulo = titulo;
+        this.autor = autor;
+        this.anioPublicacion = anioPublicacion;
+    }
+
+    @Override
+    public String toString() {
+        return "ID: " + id + ", Título: " + titulo + ", Autor: " + autor + ", Año: " + anioPublicacion;
+    }
+}
+
+class NodoBPlus {
+    boolean esHoja;
+    ArrayList<Integer> claves;
+    ArrayList<NodoBPlus> hijos;
+    NodoBPlus siguiente;
+    ArrayList<Libro> libros; 
+
+    public NodoBPlus(boolean esHoja, int orden) {
+        this.esHoja = esHoja;
+        this.claves = new ArrayList<>();
+        if (!esHoja) {
+            this.hijos = new ArrayList<>();
+        } else {
+            this.libros = new ArrayList<>();
+        }
+        this.siguiente = null;
+    }
+}
+
+class ArbolBPlus {
+    private NodoBPlus raiz;
+    private int orden;
+    private int minClaves;
+
+    public ArbolBPlus(int orden) {
+        this.orden = orden;
+        this.minClaves = orden - 1;
+        this.raiz = new NodoBPlus(true, orden);
+    }
+
+    public void insertar(Libro libro) {
+        NodoBPlus raizActual = raiz;
+        if (raizActual.claves.size() == 2 * minClaves + 1) {
+            NodoBPlus nuevaRaiz = new NodoBPlus(false, orden);
+            nuevaRaiz.hijos.add(raizActual);
+            dividirHijo(nuevaRaiz, 0);
+            raiz = nuevaRaiz;
+        }
+        insertarNoLleno(raiz, libro);
+    }
+
+    private void insertarNoLleno(NodoBPlus nodo, Libro libro) {
+        int i = nodo.claves.size() - 1;
+        
+        if (nodo.esHoja) {
+            while (i >= 0 && libro.id < nodo.claves.get(i)) {
+                i--;
+            }
+            nodo.claves.add(i + 1, libro.id);
+            nodo.libros.add(i + 1, libro);
+        } else {
+            while (i >= 0 && libro.id < nodo.claves.get(i)) {
+                i--;
+            }
+            i++;
+            if (nodo.hijos.get(i).claves.size() == 2 * minClaves + 1) {
+                dividirHijo(nodo, i);
+                if (libro.id > nodo.claves.get(i)) {
+                    i++;
+                }
+            }
+            insertarNoLleno(nodo.hijos.get(i), libro);
+        }
+    }
+
+    private void dividirHijo(NodoBPlus padre, int indice) {
+        NodoBPlus hijo = padre.hijos.get(indice);
+        NodoBPlus nuevoHijo = new NodoBPlus(hijo.esHoja, orden);
+        
+        
+        for (int i = 0; i < minClaves; i++) {
+            nuevoHijo.claves.add(hijo.claves.remove(minClaves + 1));
+            if (hijo.esHoja) {
+                nuevoHijo.libros.add(hijo.libros.remove(minClaves + 1));
+            }
+        }
+        
+        if (!hijo.esHoja) {
+            for (int i = 0; i <= minClaves; i++) {
+                nuevoHijo.hijos.add(hijo.hijos.remove(minClaves + 1));
+            }
+        }
+        
+        padre.claves.add(indice, hijo.claves.remove(minClaves));
+        padre.hijos.add(indice + 1, nuevoHijo);
+        
+        
+        if (hijo.esHoja) {
+            nuevoHijo.siguiente = hijo.siguiente;
+            hijo.siguiente = nuevoHijo;
+        }
+    }
+
+    public Libro buscar(int id, ArrayList<Integer> ruta) {
+        long inicio = System.nanoTime();
+        Libro resultado = buscarEnNodo(raiz, id, ruta);
+        long fin = System.nanoTime();
+        long tiempo = TimeUnit.NANOSECONDS.toMillis(fin - inicio);
+        System.out.println("Tiempo de búsqueda: " + tiempo + " ms");
+        return resultado;
+    }
+
+    private Libro buscarEnNodo(NodoBPlus nodo, int id, ArrayList<Integer> ruta) {
+        int i = 0;
+        while (i < nodo.claves.size() && id > nodo.claves.get(i)) {
+            i++;
+        }
+        
+        if (i < nodo.claves.size()) {
+            ruta.add(nodo.claves.get(i));
+        } else if (!nodo.esHoja && !nodo.hijos.isEmpty()) {
+            ruta.add(nodo.claves.get(nodo.claves.size() - 1));
+        }
+        
+        if (nodo.esHoja) {
+            for (int j = 0; j < nodo.claves.size(); j++) {
+                if (id == nodo.claves.get(j)) {
+                    return nodo.libros.get(j);
+                }
+            }
+            return null;
+        } else {
+            return buscarEnNodo(nodo.hijos.get(i), id, ruta);
+        }
+    }
+
+    public ArrayList<Libro> obtenerTodosLibros() {
+        ArrayList<Libro> todos = new ArrayList<>();
+        NodoBPlus actual = raiz;
+        
+        
+        while (!actual.esHoja) {
+            actual = actual.hijos.get(0);
+        }
+        
+        
+        while (actual != null) {
+            todos.addAll(actual.libros);
+            actual = actual.siguiente;
+        }
+        
+        return todos;
+    }
+
+    public void dibujarArbol() {
+        dibujarNodo(raiz, 0);
+    }
+
+    private void dibujarNodo(NodoBPlus nodo, int nivel) {
+        StringBuilder indentacion = new StringBuilder();
+        for (int i = 0; i < nivel; i++) {
+            indentacion.append("    ");
+        }
+        
+        System.out.print(indentacion.toString());
+        if (nodo.esHoja) {
+            System.out.print("Hoja: ");
+        } else {
+            System.out.print("Nodo: ");
+        }
+        System.out.println(nodo.claves);
+        
+        if (!nodo.esHoja) {
+            for (NodoBPlus hijo : nodo.hijos) {
+                dibujarNodo(hijo, nivel + 1);
+            }
+        }
+    }
+}
+
+public class TusCuentosSonRealidad {
+    public static void mostrarLogo() {
+        System.out.println("");
+        System.out.println("*                                              *");
+        System.out.println("*        TUS CUENTOS SON REALIDAD              *");
+        System.out.println("*                                              *");
+        System.out.println("*                                              *");
+        System.out.println("");
+        System.out.println();
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        ArbolBPlus arbol = new ArbolBPlus(3); 
+        
+        mostrarLogo();
+        
+        while (true) {
+            System.out.println("\n--- Menú Principal ---");
+            System.out.println("1. Agregar libro a la biblioteca");
+            System.out.println("2. Buscar libro por ID");
+            System.out.println("3. Mostrar catálogo completo");
+            System.out.println("4. Visualizar estructura del índice");
+            System.out.println("5. Salir del sistema");
+            System.out.print("Seleccione una opción: ");
+            
+            int opcion = scanner.nextInt();
+            scanner.nextLine(); 
+            
+            switch (opcion) {
+                case 1:
+                    System.out.println("\n--- Agregar nuevo libro ---");
+                    System.out.print("Ingrese ID del libro: ");
+                    int id = scanner.nextInt();
+                    scanner.nextLine();
+                    System.out.print("Ingrese título del libro: ");
+                    String titulo = scanner.nextLine();
+                    System.out.print("Ingrese autor del libro: ");
+                    String autor = scanner.nextLine();
+                    System.out.print("Ingrese año de publicación: ");
+                    int anio = scanner.nextInt();
+                    scanner.nextLine();
+                    
+                    Libro nuevoLibro = new Libro(id, titulo, autor, anio);
+                    arbol.insertar(nuevoLibro);
+                    System.out.println("\n¡Libro agregado exitosamente a 'Tus Cuentos Son Realidad'!");
+                    break;
+                    
+                case 2:
+                    System.out.println("\n--- Buscar libro ---");
+                    System.out.print("Ingrese ID del libro a buscar: ");
+                    int idBuscar = scanner.nextInt();
+                    scanner.nextLine();
+                    
+                    ArrayList<Integer> ruta = new ArrayList<>();
+                    Libro libroEncontrado = arbol.buscar(idBuscar, ruta);
+                    
+                    System.out.println("\nResultado de búsqueda:");
+                    if (libroEncontrado != null) {
+                        System.out.println("Libro encontrado: " + libroEncontrado);
+                    } else {
+                        System.out.println("Libro no encontrado en nuestra biblioteca.");
+                    }
+                    System.out.println("Ruta de búsqueda en el índice: " + ruta);
+                    break;
+                    
+                case 3:
+                    ArrayList<Libro> todosLibros = arbol.obtenerTodosLibros();
+                    System.out.println("\n--- Catálogo Completo de 'Tus Cuentos Son Realidad' ---");
+                    if (todosLibros.isEmpty()) {
+                        System.out.println("La biblioteca está vacía.");
+                    } else {
+                        for (Libro libro : todosLibros) {
+                            System.out.println(libro);
+                        }
+                    }
+                    break;
+                    
+                case 4:
+                    System.out.println("\n--- Estructura del Índice B+ ---");
+                    arbol.dibujarArbol();
+                    break;
+                    
+                case 5:
+                    System.out.println("\nGracias por usar 'Tus Cuentos Son Realidad'. ¡Hasta pronto!");
+                    scanner.close();
+                    System.exit(0);
+                    break;
+                    
+                default:
+                    System.out.println("Opción no válida. Por favor, seleccione una opción del 1 al 5.");
+            }
+        }
+    }
+}
